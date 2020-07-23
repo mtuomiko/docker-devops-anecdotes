@@ -64,6 +64,7 @@ const App = (props) => {
 
     return (
         <div>
+            <Heading text="CI works!" />
             <Heading text="Anecdote of the day" />
             <Anecdote anecdotes={props.anecdotes} selected={selected} />
             <Votes selected={selected} votes={votes} />
