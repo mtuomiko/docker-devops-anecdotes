@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  build-push-deploy:
+  build:
     machine: true
     steps:
       - checkout
