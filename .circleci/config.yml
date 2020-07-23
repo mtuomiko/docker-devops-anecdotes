@@ -1,0 +1,10 @@
+version: 2.1
+orbs:
+  docker: circleci/docker@1.3.0
+workflows:
+  build-and-deploy:
+    jobs:
+      - docker/publish:
+          image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
+          tag: 'latest'
+
