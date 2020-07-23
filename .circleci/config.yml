@@ -13,9 +13,6 @@ jobs:
             else
               echo "Heroku is already installed. No operation was performed."
             fi
-      #- run:
-         #name: Install Docker client
-         #command: sudo apt-get update && sudo apt-get install -y docker-cli
       - run: 
           name: Build Docker image
           command: docker build -t $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME .
