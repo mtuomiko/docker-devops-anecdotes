@@ -1,19 +1,15 @@
 version: 2.1
-orbs:
-  heroku: circleci/heroku@1.1.1
 jobs:
-  deploy:
-    executor: heroku/default
+  build-push-deploy:
+    machine: true
     steps:
       - checkout
-      - heroku/install
-      - heroku/push-docker-image:
-          process-types: 'web'
-      - heroku/release-docker-image:
-          process-types: 'web'
-
-workflows:
-  build-push-deploy:
-    jobs:
-      - deploy
+      - run: docker build -t $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME .
+      - run: |
+          docker login -u $DOCKER_LOGIN -p $DOCKER_PASSWORD
+          docker push $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
+      - run: |
+          docker login --username=$HEROKU_LOGIN --password=$HEROKU_API_KEY registry.heroku.com
+          docker tag $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME registry.heroku.com/$HEROKU_APP_NAME/web
+          docker push registry.heroku.com/$HEROKU_APP_NAME/web
 
