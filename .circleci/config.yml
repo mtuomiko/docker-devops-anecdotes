@@ -2,14 +2,22 @@ version: 2.1
 orbs:
   docker: circleci/docker@1.3.0
   heroku: circleci/heroku@1.1.1
+jobs:
+  deploy:
+    executor: heroku/default
+    steps:
+      - checkout
+      - heroku/install
+      - heroku/push-docker-image:
+          process-types: 'web'
+      - heroku/release-docker-image:
+          process-types: 'web'
+
 workflows:
   build-push-deploy:
     jobs:
       - docker/publish:
           image: mtuomiko/docker-devops-anecdotes
           tag: 'latest'
-      - heroku/push-docker-image:
-          process-types: 'web'
-      - heroku/release-docker-image:
-          process-types: 'web'
+      - deploy
 
