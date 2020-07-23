@@ -5,8 +5,7 @@ jobs:
   build-and-push:
     machine: true
     steps:
-      - run: |
-          echo "$DOCKER_PASS" | docker login -u "$DOCKER_LOGIN" --password-stdin
+      - run: docker login -u "$DOCKER_LOGIN" -p "$DOCKER_PASS"
       - run: docker build -t $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME .
       - run: docker push $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
 
