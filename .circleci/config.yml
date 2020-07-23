@@ -5,10 +5,9 @@ jobs:
   build-and-push:
     machine: true
     steps:
-      - run: docker login -u "$DOCKER_LOGIN" -p "$DOCKER_PASS"
+      - run: docker login -u $DOCKER_LOGIN -p $DOCKER_PASS
       - run: docker build -t $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME .
       - run: docker push $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
-
 
 workflows:
   build-push-deploy:
