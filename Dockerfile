@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     apt-get purge -y --auto-remove curl git && \
     rm -rf /var/lib/apt/lists/*
 
-CMD serve -s -l 80 build
+CMD serve -s -l $PORT build
 
-EXPOSE 80
+EXPOSE $PORT
 
