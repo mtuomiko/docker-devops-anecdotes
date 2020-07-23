@@ -1,20 +1,15 @@
 version: 2.1
-#orbs:
-#  docker: circleci/docker@1.3.0
-jobs:
-  build-and-push:
-    machine: true
-    steps:
-      - checkout
-      - run: docker login -u $DOCKER_LOGIN -p $DOCKER_PASSWORD
-      - run: docker build -t $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME .
-      - run: docker push $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
-
+orbs:
+  docker: circleci/docker@1.3.0
+  heroku: circleci/heroku@1.1.1
 workflows:
   build-push-deploy:
     jobs:
-      - build-and-push
-        #      - docker/publish:
-        #          image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
-        #          tag: 'latest'
+      - docker/publish:
+          image: mtuomiko/docker-devops-anecdotes
+          tag: 'latest'
+      - heroku/push-docker-image:
+          process-types: 'web'
+      - heroku/release-docker-image:
+          process-types: 'web'
 
